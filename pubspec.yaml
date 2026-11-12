@@ -1,0 +1,48 @@
+name: gt_audio
+description: "Unified audio player for Flutter with streaming, offline downloading, queue management, background playback, Android Auto, and CarPlay."
+version: 1.0.0
+homepage: https://github.com/govindtank/gt_audio
+repository: https://github.com/govindtank/gt_audio
+issue_tracker: https://github.com/govindtank/gt_audio/issues
+
+funding:
+  - https://github.com/sponsors/govindtank
+  - https://buymeacoffee.com/govindtanko
+
+topics:
+  - audio
+  - player
+  - background-audio
+  - android-auto
+  - carplay
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  just_audio: ^0.10.6
+  audio_service: ^0.18.19
+  audio_session: ^0.2.4
+  rxdart: ^0.28.0
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
+  http: ^1.3.0
+  waveform_pro: ^1.2.1
+  ambient_backdrop_glow: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.govindtank.gt_audio
+        pluginClass: GtAudioPlugin
+      ios:
+        pluginClass: GtAudioPlugin
