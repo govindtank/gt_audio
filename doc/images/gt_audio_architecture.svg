@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#312E81"/>
+      <stop offset="100%" stop-color="#1E1B4B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="520" rx="20" fill="url(#archBg)" stroke="#1E293B" stroke-width="1.5"/>
+
+  <!-- Section Header -->
+  <text x="50" y="46" fill="#F8FAFC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700">gt_audio Architecture &amp; Data Pipeline</text>
+  <text x="50" y="68" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">Unified facade isolating low-level audio isolates, caching, downloading, and automotive protocols.</text>
+
+  <!-- Layer 1: Flutter UI / Host App -->
+  <g transform="translate(50, 95)">
+    <rect width="900" height="74" rx="12" fill="#1E293B" stroke="#334155" stroke-width="1.2"/>
+    <text x="24" y="32" fill="#38BDF8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" letter-spacing="1">HOST APP &amp; DROP-IN UI WIDGETS</text>
+
+    <!-- Sub-chips -->
+    <rect x="24" y="42" width="180" height="24" rx="6" fill="#0F172A"/>
+    <text x="114" y="58" fill="#E2E8F0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">GtPlayerBuilder</text>
+
+    <rect x="216" y="42" width="220" height="24" rx="6" fill="#0F172A"/>
+    <text x="326" y="58" fill="#E2E8F0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">GtWaveformSeekBar (waveform_pro)</text>
+
+    <rect x="448" y="42" width="250" height="24" rx="6" fill="#0F172A"/>
+    <text x="573" y="58" fill="#E2E8F0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">GtAlbumArtGlow (ambient_backdrop)</text>
+
+    <rect x="710" y="42" width="166" height="24" rx="6" fill="#0F172A"/>
+    <text x="793" y="58" fill="#E2E8F0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">GtMiniPlayer &amp; Queue</text>
+  </g>
+
+  <!-- Connectors -->
+  <line x1="500" y1="169" x2="500" y2="195" stroke="#6366F1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Layer 2: GtPlayer Unified Engine Facade -->
+  <g transform="translate(50, 195)">
+    <rect width="900" height="88" rx="14" fill="url(#coreGrad)" stroke="#6366F1" stroke-width="1.8"/>
+    <text x="24" y="32" fill="#A5B4FC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" letter-spacing="1">GT_PLAYER UNIFIED FACADE</text>
+    <text x="24" y="58" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">GtPlayer • Streams, Queue Management, Session &amp; Network Recovery</text>
+    <text x="24" y="76" fill="#C7D2FE" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12">playbackStateStream • positionStateStream • queueStateStream • currentTrackStream • downloadTasksStream</text>
+  </g>
+
+  <!-- Connectors Split to Subsystems -->
+  <line x1="220" y1="283" x2="220" y2="310" stroke="#818CF8" stroke-width="2"/>
+  <line x1="500" y1="283" x2="500" y2="310" stroke="#818CF8" stroke-width="2"/>
+  <line x1="780" y1="283" x2="780" y2="310" stroke="#818CF8" stroke-width="2"/>
+
+  <!-- Layer 3: Storage & Background Core -->
+  <!-- Left: Download & Cache Storage -->
+  <g transform="translate(50, 310)">
+    <rect width="280" height="80" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1.2"/>
+    <text x="18" y="26" fill="#38BDF8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Storage &amp; Cache Engine</text>
+    <text x="18" y="46" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">• GtCacheManager (LockCaching)</text>
+    <text x="18" y="64" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">• GtDownloadManager (Offline)</text>
+  </g>
+
+  <!-- Middle: Background Daemon & Queue -->
+  <g transform="translate(360, 310)">
+    <rect width="280" height="80" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1.2"/>
+    <text x="18" y="26" fill="#A855F7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Audio Handler &amp; Persistence</text>
+    <text x="18" y="46" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">• GtAudioHandler (BaseAudioHandler)</text>
+    <text x="18" y="64" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">• GtStatePersistence (App-Kill Sync)</text>
+  </g>
+
+  <!-- Right: Automotive Dispatchers -->
+  <g transform="translate(670, 310)">
+    <rect width="280" height="80" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1.2"/>
+    <text x="18" y="26" fill="#34D399" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Automotive Delegates</text>
+    <text x="18" y="46" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">• GtAndroidAutoDelegate</text>
+    <text x="18" y="64" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">• GtCarPlayDelegate (Now Playing &amp; List)</text>
+  </g>
+
+  <!-- Connectors to OS Layer -->
+  <line x1="220" y1="390" x2="220" y2="415" stroke="#475569" stroke-width="2"/>
+  <line x1="500" y1="390" x2="500" y2="415" stroke="#475569" stroke-width="2"/>
+  <line x1="810" y1="390" x2="810" y2="415" stroke="#475569" stroke-width="2"/>
+
+  <!-- Layer 4: Platform Native Endpoints -->
+  <g transform="translate(50, 415)">
+    <rect width="900" height="74" rx="12" fill="#0B132B" stroke="#1D2D50" stroke-width="1.2"/>
+    <text x="24" y="28" fill="#64748B" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="1">OPERATING SYSTEM &amp; HEAD UNIT PLATFORMS</text>
+
+    <!-- Platform tags -->
+    <rect x="24" y="38" width="260" height="24" rx="6" fill="#1C2541"/>
+    <text x="154" y="54" fill="#38BDF8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Android Auto (MediaBrowserService)</text>
+
+    <rect x="300" y="38" width="280" height="24" rx="6" fill="#1C2541"/>
+    <text x="440" y="54" fill="#F472B6" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Apple CarPlay (MPRemoteCommandCenter)</text>
+
+    <rect x="596" y="38" width="280" height="24" rx="6" fill="#1C2541"/>
+    <text x="736" y="54" fill="#34D399" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Lock Screen &amp; Foreground Notifications</text>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 name: gt_audio
 description: "Unified audio player for Flutter with streaming, offline downloading, queue management, background playback, Android Auto, and CarPlay."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/govindtank/gt_audio
 repository: https://github.com/govindtank/gt_audio
 issue_tracker: https://github.com/govindtank/gt_audio/issues

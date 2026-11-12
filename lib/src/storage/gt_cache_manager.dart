@@ -1,3 +1,5 @@
+// ignore_for_file: experimental_member_use
+
 import 'dart:io';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,7 +33,7 @@ class GtCacheManager {
   ///
   /// This automatically downloads and caches audio chunks while playing,
   /// so subsequent plays of the same track consume zero network bandwidth.
-  LockCachingAudioSource createCachingSource(Uri uri, {String? cacheKey}) {
+  AudioSource createCachingSource(Uri uri, {String? cacheKey}) {
     final key = cacheKey ?? _sanitizeKey(uri.toString());
     final cacheFile = File('${cacheDirectory.path}/$key.audio');
     return LockCachingAudioSource(

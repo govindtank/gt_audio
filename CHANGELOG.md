@@ -1,3 +1,12 @@
+## 1.0.1
+
+- Added Swift Package Manager (SPM) support for iOS (`Package.swift`).
+- Migrated Android build configuration to modern built-in Kotlin Gradle standards.
+- Suppressed analyzer experimental warning on `LockCachingAudioSource`.
+- Added high-resolution architectural diagrams and feature highlight visual blueprints.
+- Added comprehensive step-by-step testing guides for Android Auto (via DHU) and Apple CarPlay (via Xcode simulator & entitlements).
+- Added prerequisites checklist, ecosystem appreciation, and funding/sponsorship references.
+
 ## 1.0.0
 
 - Initial stable release of `gt_audio`.

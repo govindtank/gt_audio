@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#060911"/>
+    </linearGradient>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="50%" stop-color="#C084FC"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="url(#bgGrad)" rx="24"/>
+
+  <!-- Subtle glow circles -->
+  <circle cx="200" cy="80" r="140" fill="#4F46E5" opacity="0.18" filter="blur(60px)"/>
+  <circle cx="1000" cy="400" r="160" fill="#9333EA" opacity="0.15" filter="blur(70px)"/>
+
+  <!-- Header Badge -->
+  <g transform="translate(60, 48)">
+    <rect width="138" height="30" rx="15" fill="#312E81" stroke="#4338CA" stroke-width="1.2"/>
+    <text x="69" y="20" fill="#A5B4FC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1.5">FLUTTER AUDIO</text>
+  </g>
+
+  <!-- Title & Subtitle -->
+  <text x="60" y="132" fill="url(#brandGrad)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="800" letter-spacing="-0.5">gt_audio</text>
+  <text x="60" y="168" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="400">The unified audio engine for streaming, offline downloads, Android Auto, and CarPlay.</text>
+
+  <!-- Feature Cards Grid (3 Columns) -->
+  <!-- Card 1: Streaming & Offline -->
+  <g transform="translate(60, 210)" filter="url(#cardShadow)">
+    <rect width="336" height="216" rx="16" fill="url(#cardGrad1)" stroke="#334155" stroke-width="1.2"/>
+    <!-- Icon Circle -->
+    <circle cx="48" cy="46" r="22" fill="#1E1B4B" stroke="#4F46E5" stroke-width="1.5"/>
+    <path d="M42 38 L54 46 L42 54 Z" fill="#818CF8"/>
+    <!-- Text -->
+    <text x="82" y="44" fill="#F8FAFC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="700">Streaming &amp; Offline</text>
+    <text x="82" y="62" fill="#38BDF8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Zero-data replay cache</text>
+
+    <text x="30" y="104" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" line-height="20">
+      <tspan x="30" dy="0">• Transparent stream chunk caching</tspan>
+      <tspan x="30" dy="24">• Full offline file download manager</tspan>
+      <tspan x="30" dy="24">• Auto-fallback: remote URL to local file</tspan>
+      <tspan x="30" dy="24">• Queue &amp; position saved across kills</tspan>
+    </text>
+  </g>
+
+  <!-- Card 2: Automotive Ready -->
+  <g transform="translate(432, 210)" filter="url(#cardShadow)">
+    <rect width="336" height="216" rx="16" fill="url(#cardGrad1)" stroke="#334155" stroke-width="1.2"/>
+    <!-- Icon Circle -->
+    <circle cx="48" cy="46" r="22" fill="#1E293B" stroke="#0EA5E9" stroke-width="1.5"/>
+    <!-- Car silhouette symbol -->
+    <path d="M38 48 L41 40 L55 40 L58 48 L60 52 L36 52 Z M42 55 A2 2 0 1 0 42 51 A2 2 0 1 0 42 55 M54 55 A2 2 0 1 0 54 51 A2 2 0 1 0 54 55" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text -->
+    <text x="82" y="44" fill="#F8FAFC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="700">Automotive First</text>
+    <text x="82" y="62" fill="#0EA5E9" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Android Auto + CarPlay</text>
+
+    <text x="30" y="104" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">
+      <tspan x="30" dy="0">• MediaBrowserCompat folder tree</tspan>
+      <tspan x="30" dy="24">• In-car ContentProvider artwork serving</tspan>
+      <tspan x="30" dy="24">• Google Assistant in-car voice search</tspan>
+      <tspan x="30" dy="24">• MPRemoteCommandCenter lock screen</tspan>
+    </text>
+  </g>
+
+  <!-- Card 3: UI Widgets & Ecosystem -->
+  <g transform="translate(804, 210)" filter="url(#cardShadow)">
+    <rect width="336" height="216" rx="16" fill="url(#cardGrad1)" stroke="#334155" stroke-width="1.2"/>
+    <!-- Icon Circle -->
+    <circle cx="48" cy="46" r="22" fill="#2E1065" stroke="#A855F7" stroke-width="1.5"/>
+    <path d="M40 50 L40 42 M45 52 L45 36 M50 50 L50 40 M55 53 L55 38" stroke="#C084FC" stroke-width="2" stroke-linecap="round"/>
+    <!-- Text -->
+    <text x="82" y="44" fill="#F8FAFC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="700">Rich Reactive UI</text>
+    <text x="82" y="62" fill="#C084FC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600">Waveforms &amp; Ambient Glow</text>
+
+    <text x="30" y="104" fill="#94A3B8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">
+      <tspan x="30" dy="0">• Waveform scrubbing (waveform_pro)</tspan>
+      <tspan x="30" dy="24">• Dynamic artwork glow (ambient_backdrop)</tspan>
+      <tspan x="30" dy="24">• Drop-in expandable GtMiniPlayer</tspan>
+      <tspan x="30" dy="24">• Reorderable GtQueueSheet</tspan>
+    </text>
+  </g>
+</svg>

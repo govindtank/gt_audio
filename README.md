@@ -1,50 +1,52 @@
-# gt_audio
+<p align="center">
+  <img src="https://raw.githubusercontent.com/govindtank/gt_audio/main/doc/images/gt_audio_banner.svg" alt="gt_audio banner" width="100%"/>
+</p>
 
-[![pub package](https://img.shields.io/pub/v/gt_audio.svg)](https://pub.dev/packages/gt_audio)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/govindtank/gt_audio/blob/main/LICENSE)
-[![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey)](https://pub.dev/packages/gt_audio)
-
-A production-ready, unified audio player package for Flutter that combines **streaming**, **offline downloads**, **background playback**, **lock screen media controls**, **Android Auto**, and **Apple CarPlay** behind a clean, single-point API.
-
-Built on top of `just_audio` + `audio_service` + `audio_session`, `gt_audio` eliminates boilerplate glue code and adds critical production capabilities like automatic stream-caching, state persistence across app kills, network retry guards, and drop-in UI widgets.
-
----
-
-## Features
-
-- 🎧 **Single-Facade Controller (`GtPlayer`)**: Full playback, queue management, volume, and speed control with zero state management ceremony.
-- ⚡ **Transparent Stream Caching (`GtCacheManager`)**: Plays remote audio streams instantly while caching chunks to disk; repeat plays consume zero network bandwidth.
-- 💾 **Built-in Offline Download Manager (`GtDownloadManager`)**: Download tracks and playlists to local storage with progress streams, pause/resume, and seamless auto-fallback from remote URLs to local files.
-- 🔄 **Crash & App-Kill Resilience (`GtStatePersistence`)**: Automatically preserves the active queue, index, and playback head position across app restarts.
-- 🚗 **First-Class Android Auto Support**: Native `MediaBrowserServiceCompat` integration with built-in content provider artwork serving.
-- 🚘 **Apple CarPlay Ready**: Native `MPRemoteCommandCenter` and `MPNowPlayingInfoCenter` support out of the box, plus modular template delegates for apps with CarPlay entitlements.
-- 📶 **Network Drop Guards (`GtNetworkGuard`)**: Automatically recovers and retries playback when switching from Wi-Fi to cellular or experiencing network dropouts.
-- 🎨 **Drop-In Reactive Widgets**:
-  - `GtPlayerBuilder`: Rebuild your custom UI reactively on state, position, or queue updates.
-  - `GtSeekBar`: Smooth scrubbing with buffered progress visualization.
-  - `GtWaveformSeekBar`: Interactive GPU-accelerated audio waveform scrubbing powered by [`waveform_pro`](https://pub.dev/packages/waveform_pro).
-  - `GtAlbumArtGlow`: Spotify / Apple Music-style dynamic ambient backdrop glow powered by [`ambient_backdrop_glow`](https://pub.dev/packages/ambient_backdrop_glow).
-  - `GtMiniPlayer`: Ready-to-use expandable bottom mini player.
-  - `GtQueueSheet`: Modal draggable queue manager.
+<p align="center">
+  <a href="https://pub.dev/packages/gt_audio"><img src="https://img.shields.io/pub/v/gt_audio.svg?color=6366F1" alt="Pub Version"/></a>
+  <a href="https://pub.dev/packages/gt_audio/score"><img src="https://img.shields.io/pub/points/gt_audio?color=34D399" alt="Pub Points"/></a>
+  <a href="https://github.com/govindtank/gt_audio/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"/></a>
+  <a href="https://pub.dev/packages/gt_audio"><img src="https://img.shields.io/badge/platform-Android%20%7C%20iOS-lightgrey.svg" alt="Platform"/></a>
+  <a href="https://github.com/sponsors/govindtank"><img src="https://img.shields.io/badge/sponsor-GitHub%20Sponsors-EA4AAA.svg?logo=github" alt="Sponsor"/></a>
+  <a href="https://buymeacoffee.com/govindtanko"><img src="https://img.shields.io/badge/donate-Buy%20Me%20A%20Coffee-FFDD00.svg?logo=buy-me-a-coffee&logoColor=black" alt="Donate"/></a>
+</p>
 
 ---
 
-## Installation
+## Overview
 
-Add `gt_audio` to your `pubspec.yaml`:
+**`gt_audio`** is a production-ready, unified audio player package for Flutter that combines **streaming**, **transparent chunk caching**, **offline file downloads**, **background playback**, **lock screen media controls**, **Android Auto**, and **Apple CarPlay** behind a clean, single-point reactive facade API (`GtPlayer`).
 
-```yaml
-dependencies:
-  gt_audio: ^1.0.0
-```
+Built on proven low-level primitives (`just_audio` + `audio_service` + `audio_session`), `gt_audio` removes the boilerplate glue code and adds critical production capabilities like automatic stream-caching (replays consume zero data), state persistence across app kills, network retry guards, and drop-in interactive UI widgets.
 
 ---
 
-## Platform Setup
+## Architecture Blueprint
 
-### Android
+<p align="center">
+  <img src="https://raw.githubusercontent.com/govindtank/gt_audio/main/doc/images/gt_audio_architecture.svg" alt="gt_audio architecture" width="100%"/>
+</p>
 
-1. Open `android/app/src/main/AndroidManifest.xml` and ensure permissions and audio service are registered:
+---
+
+## Prerequisites (Checklist Before You Start)
+
+Ensure your development environment and target platforms meet the following baseline requirements:
+
+| Platform | Minimum Requirement | Notes |
+| :--- | :--- | :--- |
+| **Flutter SDK** | `>=3.24.0` | Compatible with Flutter 3.24 through Flutter 3.50+ |
+| **Dart SDK** | `>=3.5.0` | Uses modern Dart features and type safety |
+| **Android** | `minSdkVersion = 21`, `compileSdk = 34` | Requires Foreground Service Media Playback permission |
+| **iOS** | `iOS 13.0` minimum target | Requires `audio` UIBackgroundModes declared in `Info.plist` |
+
+---
+
+## Platform Configuration
+
+### 1. Android Setup
+
+Open `android/app/src/main/AndroidManifest.xml` and add the required permissions and service declarations inside `<manifest>`:
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -55,10 +57,11 @@ dependencies:
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
 
     <application>
-        <!-- Audio Service Activity & Service -->
+        <!-- Audio Service Activity & Background Daemon -->
         <activity
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
         </activity>
 
         <service
@@ -81,9 +84,9 @@ dependencies:
 </manifest>
 ```
 
-### iOS
+### 2. iOS Setup
 
-1. Open `ios/Runner/Info.plist` and add background audio execution:
+Open `ios/Runner/Info.plist` and add background audio execution:
 
 ```xml
 <key>UIBackgroundModes</key>
@@ -92,13 +95,23 @@ dependencies:
 </array>
 ```
 
+If you stream over plain `http://` (non-SSL), also enable arbitrary loads:
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+</dict>
+```
+
 ---
 
-## Quickstart
+## Quickstart (3-Minute Setup)
 
 ### 1. Initialize Player
 
-Initialize `gt_audio` once in your `main()` or app startup:
+Call `GtPlayer.init()` once during application startup:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -109,7 +122,7 @@ void main() async {
 
   await GtPlayer.init(
     config: const GtAudioConfig(
-      androidNotificationChannelName: 'My Music Player',
+      androidNotificationChannelName: 'Music Player',
       autoPersistState: true,
       enableTransparentCaching: true,
     ),
@@ -119,11 +132,12 @@ void main() async {
 }
 ```
 
-### 2. Set Queue & Play
+### 2. Queue & Play Audio
 
 ```dart
 final player = GtPlayer.instance;
 
+// Load playlist
 await player.setQueue([
   GtTrack(
     id: 'track-1',
@@ -141,14 +155,16 @@ await player.setQueue([
   ),
 ]);
 
-// Controls
+// Playback controls
 await player.play();
 await player.pause();
 await player.skipToNext();
 await player.seek(const Duration(seconds: 45));
 ```
 
-### 3. Reactive UI with Waveform Scrubbing & Ambient Glow
+### 3. Build UI with Drop-in Widgets
+
+`gt_audio` includes drop-in reactive widgets powered by your favorite ecosystem packages:
 
 ```dart
 GtPlayerBuilder(
@@ -164,13 +180,13 @@ GtPlayerBuilder(
         // Interactive Waveform Seek Bar (powered by waveform_pro)
         const GtWaveformSeekBar(height: 56),
 
-        // Controls
-        Row(
+        // Playback Controls Row
+        const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const GtSkipButton.previous(),
-            const GtPlayPauseButton(size: 64),
-            const GtSkipButton.next(),
+            GtSkipButton.previous(),
+            GtPlayPauseButton(size: 64),
+            GtSkipButton.next(),
           ],
         ),
       ],
@@ -179,9 +195,15 @@ GtPlayerBuilder(
 )
 ```
 
-### 4. Offline Downloads
+---
 
-Download tracks with automatic local fallback:
+## Features & Deep Dives
+
+### ⚡ 1. Transparent Stream Caching (`GtCacheManager`)
+When streaming online tracks, `gt_audio` automatically downloads and caches chunks to disk via `LockCachingAudioSource`. Subsequent replays of the same song read directly from local cache with **0 KB cellular data usage**.
+
+### 💾 2. Offline Download Manager (`GtDownloadManager`)
+Full playlist and track downloading with background progress streams, pause/resume, and automatic fallback:
 
 ```dart
 // Start offline download
@@ -197,16 +219,26 @@ GtPlayer.instance.downloadTasksStream.listen((tasks) {
 
 // Check offline status
 if (GtPlayer.instance.isDownloaded(track.id)) {
-  print('Track is ready for offline listening!');
+  print('Track is available offline on disk!');
 }
 ```
 
+### 🔄 3. Crash & App-Kill Resilience (`GtStatePersistence`)
+When the OS terminates your app in the background, `gt_audio` preserves the active queue, active index, and playback position. On next launch, call:
+
+```dart
+await GtPlayer.instance.restoreSavedState(autoPlay: false);
+```
+
+The user will resume right where they left off.
+
 ---
 
-## Android Auto & Apple CarPlay
+## How to Test Android Auto
 
-`gt_audio` includes a ready-to-use default delegate that exposes your current queue and downloaded music folders directly to Android Auto:
+Android Auto uses `MediaBrowserServiceCompat` to display your media hierarchy directly on the in-car dashboard screen.
 
+### Step 1: Provide the Delegate
 ```dart
 await GtPlayer.init(
   autoDelegate: GtDefaultAndroidAutoDelegate(
@@ -217,7 +249,59 @@ await GtPlayer.init(
 );
 ```
 
-On iOS, lock screen controls and CarPlay Now Playing work out of the box through `MPRemoteCommandCenter`.
+### Step 2: Test on Google's Desktop Head Unit (DHU)
+You don't need a physical car to test Android Auto. Google provides an official emulator:
+1. Open Android Studio -> **SDK Manager** -> **SDK Tools** -> Check **Android Auto Desktop Head Unit Emulator**.
+2. Connect your Android test phone or start an Android Emulator.
+3. On the phone, enable Developer Mode in the Android Auto app:
+   - Settings -> Android Auto -> Tap version 10 times -> Tap menu `...` -> **Start head unit server**.
+4. Forward ports over ADB from your terminal:
+   ```bash
+   adb forward tcp:5277 tcp:5277
+   ```
+5. Launch the DHU binary on macOS/Linux:
+   ```bash
+   $ANDROID_HOME/extras/google/auto/desktop-head-unit
+   ```
+6. The Android Auto car screen opens on your desktop. Open your app to test queue browsing, playback, and voice commands!
+
+---
+
+## How to Test Apple CarPlay
+
+Apple handles CarPlay in two distinct tiers:
+
+### Tier 1: Now Playing Controls (Zero Approval Needed)
+- Works immediately out-of-the-box via iOS `MPRemoteCommandCenter` and `MPNowPlayingInfoCenter`.
+- **How to test:** Run your app in the iOS Simulator or on a physical iPhone. Lock the screen or open Control Center to verify track title, artist, album art, and seek bar scrubbing.
+
+### Tier 2: In-Car Template Browsing (`CPListTemplate`)
+- Displaying custom navigation lists on the in-car screen requires Apple's `com.apple.developer.carplay-audio` entitlement.
+- **Requesting Entitlement:** Submit the [Apple CarPlay Audio App Entitlement Request](https://developer.apple.com/contact/carplay/). Apple grants this to streaming and music applications.
+- **Testing in Xcode Simulator:** Once granted, open the iOS Simulator -> menu **I/O** -> **External Displays** -> **CarPlay**. The car head unit window will appear side-by-side with your iPhone screen.
+
+---
+
+## Ecosystem Appreciation & Acknowledgments
+
+`gt_audio` stands on the shoulders of incredible open-source engineering in the Flutter community. We extend our deepest gratitude to:
+
+* **[Ryan Heise](https://github.com/ryanheise)** for creating the foundational libraries that power Flutter audio:
+  * [`just_audio`](https://pub.dev/packages/just_audio) — Feature-rich audio player with caching audio sources.
+  * [`audio_service`](https://pub.dev/packages/audio_service) — Background playback daemon, notification center, and automotive browser.
+  * [`audio_session`](https://pub.dev/packages/audio_session) — Audio focus and interruption management.
+* **[ReactiveX / RxDart](https://pub.dev/packages/rxdart)** for reactive stream extensions.
+* **[waveform_pro](https://pub.dev/packages/waveform_pro)** by Govind Tank for GPU-accelerated interactive waveform scrubbing.
+* **[ambient_backdrop_glow](https://pub.dev/packages/ambient_backdrop_glow)** by Govind Tank for dynamic, fluid OKLab artwork glow backdrops.
+
+---
+
+## Support & Sponsorship
+
+If `gt_audio` saves you time or powers your production applications, consider sponsoring its ongoing development and maintenance:
+
+* 💖 **GitHub Sponsors:** [sponsor govindtank](https://github.com/sponsors/govindtank)
+* ☕ **Buy Me A Coffee:** [buymeacoffee.com/govindtanko](https://buymeacoffee.com/govindtanko)
 
 ---
 
